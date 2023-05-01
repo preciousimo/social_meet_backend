@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+AUTH_USER_MODEL = 'account.User'
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=180),
@@ -48,11 +50,11 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5173", "http://127.0.0.1:3000" ,"http://localhost:3000/", "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://127.0.0.1:5173", "http://127.0.0.1:3000" ,"http://localhost:3000/", "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 INSTALLED_APPS = [
