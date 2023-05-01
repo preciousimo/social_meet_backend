@@ -67,6 +67,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 
     'corsheaders',
+
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -74,7 +76,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
 
     'corsheaders.middleware.CorsPostCsrfMiddleware',
-    
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
