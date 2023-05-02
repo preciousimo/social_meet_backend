@@ -1,8 +1,7 @@
-import uuid
-
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
 from django.utils import timezone
+from shortuuid.django_fields import ShortUUIDField
 
 
 
@@ -30,7 +29,7 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = ShortUUIDField(primary_key=True, unique=True, length=10, max_length=20, prefix="uid", alphabet="abcdefgh12345", editable=False)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=255, blank=True, default='')
     avatar = models.ImageField(upload_to='avatars', blank=True, null=True)
@@ -50,4 +49,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    
