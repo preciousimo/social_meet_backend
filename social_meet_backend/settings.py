@@ -67,6 +67,7 @@ INSTALLED_APPS = [
 
     'account',
     'post',
+    'search',
 ]
 
 MIDDLEWARE = [
