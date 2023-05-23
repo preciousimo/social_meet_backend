@@ -3,7 +3,7 @@ Social Meet Backend is a project that provides a backend solution for a social n
 
 
 ## Features
-* User authentication with JWT tokens
+* User authentication
 * User registration and login
 * Friend requests and messaging
 * User profiles and social feeds
