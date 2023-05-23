@@ -10,6 +10,7 @@ urlpatterns = [
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('editprofile/', views.editprofile, name='editprofile'),
     path('editpassword/', views.editpassword, name='editpassword'),
+    path('friends/suggested/', views.my_friendship_suggestions, name='my_friendship_suggestions'),
     path('friends/<uuid:pk>/', views.friends, name='friends'),
     path('friends/<uuid:pk>/request/', views.send_friendship_request, name='send_friendship_request'),
     path('friends/<uuid:pk>/<str:status>/', views.handle_request, name='handle_request'),
