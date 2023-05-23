@@ -58,7 +58,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         if self.avatar:
             return self.avatar.url
         else:
-            return ''
+            return 'https://picsum.photos/200/200'
 
 class FriendshipRequest(models.Model):
     SENT = 'sent'
