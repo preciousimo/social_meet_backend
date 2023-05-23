@@ -39,6 +39,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     friends = models.ManyToManyField('self')
     friends_count = models.IntegerField(default=0)
 
+    posts_count = models.IntegerField(default=0)
+
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -51,6 +53,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    def get_avatar(self):
+        if self.avatar:
+            return self.avatar.url
+        else:
+            return ''
 
 class FriendshipRequest(models.Model):
     SENT = 'sent'

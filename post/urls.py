@@ -10,4 +10,5 @@ urlpatterns = [
     path('<uuid:pk>/comment/', views.post_create_comment, name='post_create_comment'),
     path('profile/<uuid:id>/', views.post_list_profile, name='post_list_profile'),
     path('create/', views.post_create, name='post_create'),
+    path('trends/', views.get_trends, name='get_trends'),
 ]
