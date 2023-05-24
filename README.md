@@ -1,4 +1,6 @@
-﻿# Social Meet Backend
+![smba](https://github.com/preciousimo/social_meet_backend/assets/47305153/11decf72-8030-41f1-a384-04ba0cd7ca9a)
+
+# Social Meet Backend
 Social Meet Backend is a project that provides a backend solution for a social networking platform. This project uses Django, Django Rest Framework, and PostgreSQL to build the backend APIs that can be used by the frontend application to handle user authentication, friend requests, messaging, and other social features.
 
 
