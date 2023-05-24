@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'search',
     'chat',
     'notification',
+    'landing',
 ]
 
 MIDDLEWARE = [
