@@ -21,6 +21,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+WEBSITE_URL = 'https://social_meet_api.up.railway.app'
+
 
 # Application definition
 
@@ -194,5 +196,5 @@ AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['https://social_meet_api.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://social_meet_api.up.railway.app']
  

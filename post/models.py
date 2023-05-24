@@ -1,5 +1,6 @@
 import uuid
 
+from django.conf import settings
 from django.db import models
 from django.utils.timesince import timesince
 
@@ -32,7 +33,7 @@ class PostAttachment(models.Model):
 
     def get_image(self):
         if self.image:
-            return self.image.url
+            return settings.WEBSITE_URL + self.image.url
         else:
             return ''
 
