@@ -10,8 +10,10 @@ from shortuuid.django_fields import ShortUUIDField
 
 class CustomUserManager(UserManager):
     def _create_user(self, name, email, password, **extra_fields):
+        if not name:
+            raise ValueError("You must provide a name")
         if not email:
-            raise ValueError("You have not provided a valid e-mail address")
+            raise ValueError("You have not provided a valid email address")
         
         email = self.normalize_email(email)
         user = self.model(email=email, name=name, **extra_fields)
@@ -55,7 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['name']
 
     def get_avatar(self):
         if self.avatar:
