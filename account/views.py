@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.conf import settings
+from social_meet_backend import settings
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import send_mail
 from django.http import JsonResponse, HttpResponse
@@ -41,15 +41,14 @@ def signup(request):
         user.is_active = False
         user.save()
 
+        subject = "Please verify your email"
         url = f'{settings.WEBSITE_URL}/activateemail/?email={user.email}&id={user.id}'
+        message = f"The url for activating your account is: {url}"
+        from_email = settings.EMAIL_HOST_USER
+        to_email = user.email
 
-        send_mail(
-            "Please verify your email",
-            f"The url for activating your account is: {url}",
-            "noreply@socialmeetapi.com",
-            [user.email],
-            fail_silently=False,
-        )
+        send_mail(subject, message, from_email, [to_email], fail_silently=False,)
+
     else:
         message = form.errors.as_json()
 

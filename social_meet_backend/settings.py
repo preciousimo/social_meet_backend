@@ -121,7 +121,7 @@ WSGI_APPLICATION = 'social_meet_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if os.environ.get('DJANGO_SETTINGS_MODULE') != 'social.settings':
+if os.getenv('DJANGO_SETTINGS_MODULE') != 'social_meet_backend.settings':
     # PostgreSQL configuration
     DATABASES = {
         'default': {
@@ -198,4 +198,13 @@ AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = ['https://social-meet-api.up.railway.app']
+
+# EMAIL - SMTP SERVER (from google gmail)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
  
