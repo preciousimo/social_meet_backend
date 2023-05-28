@@ -26,8 +26,6 @@ WEBSITE_URL = 'https://social-meet-api.up.railway.app'
 
 # Application definition
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
 AUTH_USER_MODEL = 'account.User'
 
 SIMPLE_JWT = {
@@ -121,26 +119,16 @@ WSGI_APPLICATION = 'social_meet_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if os.getenv('DJANGO_SETTINGS_MODULE') != 'social_meet_backend.settings':
-    # PostgreSQL configuration
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': str(os.getenv('DB_NAME')) ,
-            'USER': str(os.getenv('DB_USER')),
-            'PASSWORD': str(os.getenv('DB_PASSWORD')),
-            'HOST': str(os.getenv('DB_HOST')),
-            'PORT': str(os.getenv('DB_PORT')),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': str(os.getenv('DB_NAME')) ,
+        'USER': str(os.getenv('DB_USER')),
+        'PASSWORD': str(os.getenv('DB_PASSWORD')),
+        'HOST': str(os.getenv('DB_HOST')),
+        'PORT': str(os.getenv('DB_PORT')),
     }
-else:
-    # SQLite configuration for development
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 
 # Password validation

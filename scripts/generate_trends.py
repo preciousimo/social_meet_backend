@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import django
 import os
 import sys
@@ -8,7 +10,7 @@ from django.utils import timezone
 
 
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "social_meet_backend.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wey_backend.settings")
 django.setup()
 
 
@@ -18,7 +20,7 @@ def extract_hashtags(text, trends):
     for word in text.split():
         if word[0] == '#':
             trends.append(word[1:])
-
+    
     return trends
 
 for trend in Trend.objects.all():

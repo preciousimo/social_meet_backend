@@ -8,8 +8,8 @@ class PostForm(ModelForm):
         model = Post
         fields = ('body', 'is_private',)
 
+
 class AttachmentForm(ModelForm):
     class Meta:
         model = PostAttachment
         fields = ('image',)
-        

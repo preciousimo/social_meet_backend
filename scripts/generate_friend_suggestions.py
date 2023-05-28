@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import django
 import os
 import sys
@@ -29,5 +31,5 @@ for user in users:
         for friendsfriend in friend.friends.all():
             if friendsfriend not in user.friends.all() and friendsfriend != user:
                 user.people_you_may_know.add(friendsfriend)
-
+    
     print()

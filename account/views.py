@@ -1,15 +1,15 @@
-from django.shortcuts import render
-from social_meet_backend import settings
+from django.conf import settings
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import send_mail
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
+
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
+
+from notification.utils import create_notification
 
 from .forms import SignupForm, ProfileForm
 from .models import User, FriendshipRequest
 from .serializers import UserSerializer, FriendshipRequestSerializer
-
-from notification.utils import create_notification
 
 
 @api_view(['GET'])
@@ -48,28 +48,13 @@ def signup(request):
         to_email = user.email
 
         send_mail(subject, message, from_email, [to_email], fail_silently=False,)
-
     else:
         message = form.errors.as_json()
-
+    
     print(message)
 
     return JsonResponse({'message': message}, safe=False)
 
-
-def activateemail(request):
-    email = request.GET.get('email', '')
-    id = request.GET.get('id', '')
-
-    if email and id:
-        user = User.objects.get(id=id, email=email)
-        user.is_active = True
-        user.save()
-
-        return HttpResponse('The user is now activated. You can go ahead and log in!')
-    else:
-        return HttpResponse('The parameters is not valid!')
-    
 
 @api_view(['GET'])
 def friends(request, pk):
@@ -105,21 +90,20 @@ def editprofile(request):
     if User.objects.exclude(id=user.id).filter(email=email).exists():
         return JsonResponse({'message': 'email already exists'})
     else:
-
         form = ProfileForm(request.POST, request.FILES, instance=user)
 
         if form.is_valid():
             form.save()
-
+        
         serializer = UserSerializer(user)
 
         return JsonResponse({'message': 'information updated', 'user': serializer.data})
-
+    
 
 @api_view(['POST'])
 def editpassword(request):
     user = request.user
-
+    
     form = PasswordChangeForm(data=request.POST, user=user)
 
     if form.is_valid():
@@ -128,8 +112,7 @@ def editpassword(request):
         return JsonResponse({'message': 'success'})
     else:
         return JsonResponse({'message': form.errors.as_json()}, safe=False)
-    
-    
+
 @api_view(['POST'])
 def send_friendship_request(request, pk):
     user = User.objects.get(pk=pk)

@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -39,7 +38,7 @@ def conversation_get_or_create(request, user_pk):
         conversation.save()
 
     serializer = ConversationDetailSerializer(conversation)
-
+    
     return JsonResponse(serializer.data, safe=False)
 
 

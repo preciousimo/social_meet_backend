@@ -4,16 +4,13 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
 from django.utils import timezone
-from shortuuid.django_fields import ShortUUIDField
 
 
 
 class CustomUserManager(UserManager):
     def _create_user(self, name, email, password, **extra_fields):
-        if not name:
-            raise ValueError("You must provide a name")
         if not email:
-            raise ValueError("You have not provided a valid email address")
+            raise ValueError("You have not provided a valid e-mail address")
         
         email = self.normalize_email(email)
         user = self.model(email=email, name=name, **extra_fields)
@@ -35,7 +32,6 @@ class CustomUserManager(UserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user_id = ShortUUIDField(unique=True, length=10, max_length=20, prefix="uid", alphabet="abcdefgh12345")
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=255, blank=True, default='')
     avatar = models.ImageField(upload_to='avatars', blank=True, null=True)
@@ -65,6 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         else:
             return 'https://picsum.photos/200/200'
 
+
 class FriendshipRequest(models.Model):
     SENT = 'sent'
     ACCEPTED = 'accepted'
@@ -77,7 +74,6 @@ class FriendshipRequest(models.Model):
     )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    fid = ShortUUIDField(unique=True, length=10, max_length=20, prefix="fid", alphabet="abcdefgh12345")
     created_for = models.ForeignKey(User, related_name='received_friendshiprequests', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='created_friendshiprequests', on_delete=models.CASCADE)

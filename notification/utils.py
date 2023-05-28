@@ -3,6 +3,9 @@ from .models import Notification
 from post.models import Post
 from account.models import FriendshipRequest
 
+# create_notification(request, 'post_like', 'lskjf-j12l3-jlas-jdfa', 'lskjf-j12l3-jlas-jdfa')
+
+
 def create_notification(request, type_of_notification, post_id=None, friendrequest_id=None):
     created_for = None
 

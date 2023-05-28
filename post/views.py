@@ -25,7 +25,7 @@ def post_list(request):
 
     if trend:
         posts = posts.filter(body__icontains='#' + trend).filter(is_private=False)
-        
+
     serializer = PostSerializer(posts, many=True)
 
     return JsonResponse(serializer.data, safe=False)
@@ -46,7 +46,7 @@ def post_detail(request, pk):
 
 
 @api_view(['GET'])
-def post_list_profile(request, id):
+def post_list_profile(request, id):   
     user = User.objects.get(pk=id)
     posts = Post.objects.filter(created_by_id=id)
 
@@ -60,7 +60,7 @@ def post_list_profile(request, id):
 
     if request.user in user.friends.all():
         can_send_friendship_request = False
-
+    
     check1 = FriendshipRequest.objects.filter(created_for=request.user).filter(created_by=user)
     check2 = FriendshipRequest.objects.filter(created_for=user).filter(created_by=request.user)
 
@@ -121,7 +121,7 @@ def post_like(request, pk):
         return JsonResponse({'message': 'like created'})
     else:
         return JsonResponse({'message': 'post already liked'})
-    
+
 
 @api_view(['POST'])
 def post_create_comment(request, pk):

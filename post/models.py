@@ -21,7 +21,7 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ('created_at',)
-
+    
     def created_at_formatted(self):
        return timesince(self.created_at)
 
@@ -67,4 +67,3 @@ class Post(models.Model):
 class Trend(models.Model):
     hashtag = models.CharField(max_length=255)
     occurences = models.IntegerField()
-    
