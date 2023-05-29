@@ -1,6 +1,9 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import send_mail
+from django.core.exceptions import ValidationError
+
 from django.http import JsonResponse
 
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -29,30 +32,36 @@ def signup(request):
     data = request.data
     message = 'success'
 
-    form = SignupForm({
-        'email': data.get('email'),
-        'name': data.get('name'),
-        'password1': data.get('password1'),
-        'password2': data.get('password2'),
-    })
+    try:
+        # Check if the email already exists
+        email = data.get('email')
+        user_model = get_user_model()
+        user_model.objects.get(email=email)
+        message = 'Email already exists'
+    except user_model.DoesNotExist:
+        # Email doesn't exist, proceed with user creation
+        form = SignupForm({
+            'email': email,
+            'name': data.get('name'),
+            'password1': data.get('password1'),
+            'password2': data.get('password2'),
+        })
 
-    if form.is_valid():
-        user = form.save()
-        user.is_active = False
-        user.save()
+        if form.is_valid():
+            user = form.save()
+            user.is_active = False
+            user.save()
 
-        subject = "Please verify your email"
-        url = f'{settings.WEBSITE_URL}/activateemail/?email={user.email}&id={user.id}'
-        message = f"The url for activating your account is: {url}"
-        from_email = settings.EMAIL_HOST_USER
-        to_email = user.email
+            subject = "Please verify your email"
+            url = f'{settings.WEBSITE_URL}/activateemail/?email={user.email}&id={user.id}'
+            message = f"The URL for activating your account is: {url}"
+            from_email = settings.EMAIL_HOST_USER
+            to_email = user.email
 
-        send_mail(subject, message, from_email, [to_email], fail_silently=False,)
-    else:
-        message = form.errors.as_json()
+            send_mail(subject, message, from_email, [to_email], fail_silently=False)
+        else:
+            message = form.errors.as_json()
     
-    print(message)
-
     return JsonResponse({'message': message}, safe=False)
 
 
